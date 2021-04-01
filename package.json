@@ -1,0 +1,29 @@
+{
+  "name": "codemixer",
+  "version": "1.0.0",
+  "description": "Code mixer created in JavaScript, Node.js and Electron.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hoxton314/CodeMixer.git"
+  },
+  "keywords": [
+    "code",
+    "mixer",
+    "shuffle",
+    "randomizer"
+  ],
+  "author": "hoxton314",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hoxton314/CodeMixer/issues"
+  },
+  "homepage": "https://github.com/hoxton314/CodeMixer#readme",
+  "dependencies": {
+    "electron": "^12.0.2",
+    "voca": "^1.4.0"
+  }
+}

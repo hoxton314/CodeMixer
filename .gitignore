@@ -1,3 +1,8 @@
+#Processing files
+input/*
+!input/.gitkeep 
+output/*
+!output/.gitkeep 
 # Logs
 logs
 *.log
