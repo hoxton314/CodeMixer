@@ -1,2 +1,2 @@
 # CodeMixer
-Code mixer wrote in JavaScript, Node.js and Electron.js
+Code mixer created in JavaScript, Node.js and Electron.js
