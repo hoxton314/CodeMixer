@@ -1,9 +1,11 @@
-const { app, BrowserWindow } = require('electron')
-const path = require('path')
+const { app, BrowserWindow, ipcMain } = require('electron')
+const path = require('path');
+const fs = require('fs');
+const os = require('os');
 
 let win
 
-// eslint-disable-next-line require-jsdoc
+
 function createWindow() {
     win = new BrowserWindow({
         frame: false,
@@ -12,14 +14,27 @@ function createWindow() {
         webPreferences: {
             contextIsolation: false,
             nodeIntegration: true,
-            // devTools: false,
+            devTools: true,
             enableRemoteModule: true,
-            preload: path.join(__dirname, '/menu-bar/menu-preload.js')
         }
     })
 
-    win.loadFile('index.html')
+    win.loadURL(`file://${__dirname}/index.html`);
+    win.once('ready-to-show', function () {
+        win.show()
+    })
     win.setResizable(false)
+
+
+
+    win.on('closed', function () {
+        win = null
+    })
+}
+
+exports.handleForm = function handleForm(targetWindow, firstname) {
+    console.log("this is the firstname from the form ->", firstname)
+    targetWindow.webContents.send('form-received', "we got it");
 }
 
 app.whenReady().then(createWindow)

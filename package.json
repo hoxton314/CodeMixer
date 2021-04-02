@@ -4,7 +4,11 @@
   "description": "Code mixer created in JavaScript, Node.js and Electron.js",
   "main": "index.js",
   "scripts": {
-    "test": "jest"
+    "start": "electron .",
+    "test": "jest",
+    "run": "electron-forge make && electron-forge start",
+    "package": "electron-forge package",
+    "make": "electron-forge make"
   },
   "repository": {
     "type": "git",
@@ -25,5 +29,32 @@
   "dependencies": {
     "electron": "^12.0.2",
     "voca": "^1.4.0"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {
+            "name": "sokobanbanban"
+          }
+        },
+        {
+          "name": "@electron-forge/maker-zip",
+          "platforms": [
+            "darwin"
+          ]
+        },
+        {
+          "name": "@electron-forge/maker-deb",
+          "config": {}
+        },
+        {
+          "name": "@electron-forge/maker-rpm",
+          "config": {}
+        }
+      ]
+    }
   }
 }

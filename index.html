@@ -12,27 +12,74 @@
 <head>
     <meta charset="UTF-8">
     <title>MixItUp</title>
-    <script src="./node_modules/jquery/dist/jquery.js"></script>
     <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'unsafe-inline';" />
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="./style/main.css" />
     <link rel="stylesheet" href="./style/colors.css" />
-    <link rel="stylesheet" href="./style/borders.css" />
     <link rel="stylesheet" href="./style/electronstyles.css" />
+    <script defer type="module" src="./source/main.js"></script>
 
-    <script defer type="module" src="./scripts/init.js"></script>
 
     <script type="text/javascript">
+        const { remote } = require('electron')
+        function minimizeWindow() { if (remote.getCurrentWindow().minimizable) { remote.getCurrentWindow().minimize() } }
+        function closeWindow() { remote.getCurrentWindow().close() }
+        function home() { window.location.href = '../index.html' }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            window.minimizeWindow = minimizeWindow
+            window.closeWindow = closeWindow
+            window.home = home
+        })
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const consoleButton = document.getElementById('console-btn')
+            const minimizeButton = document.getElementById('minimize-btn')
+            const closeButton = document.getElementById('close-btn')
+            if (!window.location.href.includes('index')) {
+                const homeButton = document.getElementById('home-btn')
+                homeButton.addEventListener('click', () => {
+                    window.home()
+                })
+            }
+            consoleButton.addEventListener('click', () => { remote.getCurrentWindow().webContents.openDevTools() })
+            minimizeButton.addEventListener('click', () => { window.minimizeWindow() })
+            closeButton.addEventListener('click', () => { window.closeWindow() })
+        })
+
 
     </script>
 </head>
 
 <body>
-
+    <menu id="menu-bar">
+        <div class="left" role="menu">
+            <button class="menubar-btn" id="console-btn"><i class="fa fa-terminal"></i></button>
+            <h5>CodeMixer by hoxton314</h5>
+        </div>
+        <div class="right">
+            <button class="menubar-btn" id="minimize-btn"><i class="fa fa-window-minimize"></i></button>
+            <button class="menubar-btn" id="close-btn"><i class="fa fa-close"></i></button>
+        </div>
+    </menu>
     <main>
-asdf
+        Put files into input folder
+        <form action="#" id="ipcForm">
+            <label for="fname">Variable types (separated by coma)</label><br>
+            <input type="text" id="vartypes" name="fname" value="var,let,const"><br>
+            <label for="lname">Variable name examples (separated by coma)</label><br>
+            <input type="text" id="varnames" name="lname" value="mendela,mendel,maciej,mendelson,nelson"><br>
+            <input type="checkbox" id="naming1" name="vehicle1" value="camel">
+            <label for="naming1"> Use camel names (exampleName)</label><br>
+            <input type="checkbox" id="naming2" name="vehicle2" value="kebab">
+            <label for="naming2"> Use kebab names (example-name)</label><br>
+            <input type="checkbox" id="naming3" name="vehicle3" value="snake">
+            <label for="naming3"> Use snake names (example_name)</label><br>
+            <input id="submit" type="submit" value="Start">
+        </form>
 
+        <script type="module" src='./source/render.js'></script>
     </main>
 </body>
 
