@@ -12,29 +12,49 @@ export const main = {
             }
             return cwd
         }
+
+
+
+
+
+        var fileNumber = 1
         let path = cwd() + './input/'
         let files = fs.readdirSync(path)
         let loadedVars = []
         let regex
-        RegExp.quote = function (str) {
-            return str.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
-        }
+
+        let data = fs.readFileSync(path + files[fileNumber]).toString()
+
         console.log(input.vartypes)
         for (let i = 0; i < input.vartypes.length; i++) {
             regex = new RegExp('\\b' + input.vartypes[i] + ' \\S+\\b', 'gi')
-            console.log(regex)
-            loadedVars[i] = fs.readFileSync(path + files[1]).toString().match(regex)
+            //console.log(regex)
+            loadedVars[i] = data.match(regex)
         }
         loadedVars.forEach((element, count) => {
             if (element != null) {
                 loadedVars[count] = element.map(s => s.slice(input.vartypes[count].length + 1))
             }
+        })
 
-        });
-
-        //loadedFile = fs.readFileSync(path + files[1]).toString().match(/(\bvar \S+\b)/ig)
-        //loadedFile = fs.readFileSync(path + files[1]).toString().match(/(\bconst \S+\b)/ig)
         console.log(loadedVars)
-        //return input
+
+
+        var counter = 0
+        loadedVars.forEach((loadedVarsElement, loadedVarsPosition) => {
+            if (loadedVars[loadedVarsPosition] != null) {
+                loadedVars[loadedVarsPosition].forEach((element, position) => {
+                    counter = counter + 1
+                    regex = new RegExp('\\b' + input.vartypes[loadedVarsPosition] + ' ' + element + '|' + element + '\\b', 'g')
+                    console.log(regex)
+                    data = data.replace(regex, input.varnames[Math.floor(Math.random() * input.varnames.length)] + counter)
+                })
+            }
+        })
+
+        console.log(data)
+
+
+
     }
 }

@@ -9,3 +9,22 @@ body * {
 #menu-bar {
     background: #616161;
 }
+
+button{
+    background: #383838;
+}
+
+input[type=submit]:hover {
+    background-color: #313131;
+  }
+
+  input[type=submit] {
+    color: white;
+}
+input[type=text], select {
+border: 1px solid #ccc;
+color: black;
+}
+
+
+

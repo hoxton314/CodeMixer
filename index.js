@@ -25,8 +25,6 @@ function createWindow() {
     })
     win.setResizable(false)
 
-
-
     win.on('closed', function () {
         win = null
     })
