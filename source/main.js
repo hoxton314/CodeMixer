@@ -33,7 +33,7 @@ export const main = {
 
         let loadedVars = []
         let regex
-        for (let fileCounter = 1; fileCounter < files.length; fileCounter++) {
+        for (let fileCounter = 0; fileCounter < files.length; fileCounter++) {
             var fileNumber = fileCounter
             console.log(files[fileNumber])
             let data = fs.readFileSync(files[fileNumber]).toString()
@@ -53,13 +53,23 @@ export const main = {
 
 
             var counter = 0
+            let nameRand
             loadedVars.forEach((loadedVarsElement, loadedVarsPosition) => {
                 if (loadedVars[loadedVarsPosition] != null) {
                     loadedVars[loadedVarsPosition].forEach((element, position) => {
                         counter = counter + 1
-                        regex = new RegExp('\\b' + input.vartypes[loadedVarsPosition] + ' ' + element + '|' + element + '\\b', 'g')
+                        nameRand = input.varnames[Math.floor(Math.random() * input.varnames.length)] + counter
+                        //regex = new RegExp('\\b' + input.vartypes[loadedVarsPosition] + ' ' + element + '|' + element + '\\b', 'g')
+
+                        //only WITHOUT var type before
+                        regex = new RegExp('\\b(?<!' + input.vartypes[loadedVarsPosition] + ' )' + element + '\\b', 'g')
                         console.log(regex)
-                        data = data.replace(regex, input.varnames[Math.floor(Math.random() * input.varnames.length)] + counter)
+                        data = data.replace(regex, nameRand)
+
+                        //only with var type before
+                        regex = new RegExp('\\b\[^' + input.vartypes[loadedVarsPosition] + '\]' + element + '\\b', 'g')
+                        console.log(regex)
+                        data = data.replace(regex, ' ' + nameRand)
                     })
                 }
             })
